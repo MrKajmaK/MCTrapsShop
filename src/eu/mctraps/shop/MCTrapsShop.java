@@ -11,10 +11,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MCTrapsShop extends JavaPlugin {
-    public FileConfiguration config;
+    FileConfiguration config;
 
-    public Connection connection;
-    public Statement statement;
+    Connection connection;
+    Statement statement;
     private String host, database, username, password;
     private int port;
 
@@ -22,7 +22,7 @@ public class MCTrapsShop extends JavaPlugin {
     public void onEnable() {
         getLogger().info("MCTrapsShop has been enabled");
 
-        this.saveDefaultConfig();
+        saveDefaultConfig();
         getDataFolder().mkdir();
         config = getConfig();
 
@@ -54,7 +54,7 @@ public class MCTrapsShop extends JavaPlugin {
         getLogger().info("MCTrapsShop has been disabled");
     }
 
-    public void openConnection() throws SQLException, ClassNotFoundException {
+    void openConnection() throws SQLException, ClassNotFoundException {
         if(connection != null && !connection.isClosed()) {
             return;
         }

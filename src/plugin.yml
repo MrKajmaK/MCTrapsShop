@@ -10,7 +10,7 @@ commands:
     permission: smsshop.admin
   voucher:
     description: "Komenda do obsługi voucherów"
-    usage: /<command> <list|info|create|remove>
+    usage: /<command> <list|info|add|generate|remove>
     permission: smsshop.voucher
 permissions:
   smsshop.*:

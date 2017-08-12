@@ -4,4 +4,7 @@ database:
   database: database
   username: username
   password: password
-  table: vouchers
+tables:
+  vouchers: vouchers
+  offers: offers
+  history: history
