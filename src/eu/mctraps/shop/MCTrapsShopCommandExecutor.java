@@ -71,34 +71,41 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                 } else if (args[0].equalsIgnoreCase("info")) {
                     if (args.length == 2) {
                         try {
-                            ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = " + args[1] + " LIMIT 1");
-                            int id = result.getInt("id");
-                            String code = result.getString("code");
-                            int uses = result.getInt("uses");
-                            int offerid = result.getInt("offer");
-                            int timed = result.getInt("timed");
-                            String timedText = (timed == 1) ? "tak" : "nie";
-                            String end = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(result.getTimestamp("endtime"));
+                            ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = '" + args[1] + "' ORDER BY uses DESC LIMIT 1");
+                            int id = 0, uses = 0, offerid = 0, timed = 0;
+                            String code = "", timedText = "", end = "";
+                            while(result.next()) {
+                                id = result.getInt("id");
+                                code = result.getString("code");
+                                uses = result.getInt("uses");
+                                offerid = result.getInt("offer");
+                                timed = result.getInt("timed");
+                                timedText = (timed == 1) ? "tak" : "nie";
+                                end = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(result.getTimestamp("endtime"));
+                            }
 
-                            ResultSet offerResult = plugin.statement.executeQuery("SELECT * FROM " + oTable + " WHERE id = " + offerid + " LIMIT 1");
-                            String offername;
-                            if (!offerResult.next()) {
-                                offername = "Brak usługi o takim ID";
-                            } else {
+//                          ToDo: check if voucher exists, subcommands
+
+                            ResultSet offerResult = plugin.statement.executeQuery("SELECT * FROM " + oTable + " WHERE id = '" + offerid + "' LIMIT 1");
+                            String offername = "Brak usługi o takim ID";
+                            while(offerResult.next()) {
                                 offername = offerResult.getString("name");
                             }
 
                             sender.sendMessage("§c__-- §6Informacje o voucherze #" + id + " §c--__");
                             sender.sendMessage("§6Kod: §2" + code);
                             sender.sendMessage("§6Pozostałe użycia: §2" + uses);
-                            sender.sendMessage("§6Kod do usługi: §2" + offerid + " §c(§9" + offername + "§c)");
+                            sender.sendMessage("§6Kod do usługi: §2#" + offerid + " §c(§9" + offername + "§c)");
                             sender.sendMessage("§6Oferta ograniczona czasowo?: §2" + timedText);
                             if (timed == 1) {
                                 sender.sendMessage("§6Oferta ważna do: §2" + end);
                             }
+
+                            return true;
                         } catch (SQLException e) {
                             e.printStackTrace();
                             sender.sendMessage("§cWystąpił błąd w trakcie łączenia z bazą danych");
+                            return true;
                         }
                     }
                 }
