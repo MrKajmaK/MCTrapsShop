@@ -1,5 +1,6 @@
 package eu.mctraps.shop;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -9,8 +10,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Main extends JavaPlugin {
-    private Connection connection;
+public class MCTrapsShop extends JavaPlugin {
+    public FileConfiguration config;
+
+    public Connection connection;
+    public Statement statement;
     private String host, database, username, password;
     private int port;
 
@@ -20,7 +24,7 @@ public class Main extends JavaPlugin {
 
         this.saveDefaultConfig();
         getDataFolder().mkdir();
-        FileConfiguration config = getConfig();
+        config = getConfig();
 
         host = config.getString("database.host");
         port = config.getInt("database.port");
@@ -33,16 +37,16 @@ public class Main extends JavaPlugin {
             public void run() {
                 try {
                     openConnection();
-                    Statement statement = connection.createStatement();
-                } catch(ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch(SQLException e) {
+                    statement = connection.createStatement();
+                } catch(SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
         };
-
         r.runTaskAsynchronously(this);
+
+        getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
+        getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
     }
 
     @Override
@@ -61,6 +65,16 @@ public class Main extends JavaPlugin {
             }
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
+
+            getLogger().info("Successfully connected to database");
         }
+    }
+
+    public static String colorify(String s) {
+        if(s != null) {
+            return ChatColor.translateAlternateColorCodes('&', s);
+        }
+
+        return null;
     }
 }

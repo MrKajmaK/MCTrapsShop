@@ -1,5 +1,26 @@
 name: MCTrapsShop
 version: 0.0.1
 author: KajmaczeK
-main: eu.mctraps.shop.Main
+main: eu.mctraps.shop.MCTrapsShop
 website: https://mctraps.eu
+commands:
+  smsshop:
+    description: "Główna komenda pluginu"
+    usage: /<command>
+    permission: smsshop.admin
+  voucher:
+    description: "Komenda do obsługi voucherów"
+    usage: /<command> <list|info|create|remove>
+    permission: smsshop.voucher
+permissions:
+  smsshop.*:
+    description: Wszystkie uprawnienia pluginu
+    children:
+      smsshop.admin
+      smsshop.voucher
+  smsshop.admin:
+    description: "Pozwala na użycie głównej komendy"
+    default: op
+  smsshop.voucher:
+    description: "Pozwala na obsługę voucherów"
+    default: op
