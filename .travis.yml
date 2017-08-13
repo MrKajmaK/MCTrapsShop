@@ -3,13 +3,9 @@ jdk:
 - oraclejdk8
 sudo: required
 script: mvn clean verify
-before_install:
-  - sudo apt-get install -y rsync
 after_success:
   - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
-  - touch rsync-pass
-  - echo "$FTP_PASSWORD" > rsync-pass
-  - rsync -tv /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar $FTP_USER@5.135.248.254:home/mcec/mcecroot/plugins --password-file=rsync-pass
+  - echo "$FTP_PASSWORD" | rsync -tv /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar $FTP_USER@5.135.248.254:home/mcec/mcecroot/plugins
 branchers:
   only:
     - master
