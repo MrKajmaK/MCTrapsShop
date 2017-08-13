@@ -1,5 +1,4 @@
 #!/usr/bin/env expect
 spawn -noecho .travis/deploy.sh
-expect "password:"
-send "$env(FTP_PASSWORD)"
+expect "password:" { send "$env(FTP_PASSWORD)\r" }
 interact
