@@ -7,7 +7,7 @@ before_install:
   - sudo apt-get install -y rsync
 after_success:
   - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
-  - cat "$FTP_PASSWORD" | sh .travis/deploy.sh
+  - yes $FTP_PASSWORD | sh .travis/deploy.sh
 branchers:
   only:
     - master
