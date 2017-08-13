@@ -4,7 +4,7 @@ jdk:
 sudo: false
 script: mvn clean verify
 after_success: curl -T /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar
-  -u $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254/home/mcec/mcecroot/plugins
+  -u $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254:22/home/mcec/mcecroot/plugins
 deploy:
   provider: releases
   api_key:
