@@ -1,12 +1,19 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 sudo: false
 script: mvn clean verify
 deploy:
   provider: releases
-  api_key: "8b5033460493f16483b824a36f4977a5d29ecb02"
-  file: "MCTrapsShop.jar"
+  api_key: 8b5033460493f16483b824a36f4977a5d29ecb02
+  file: MCTrapsShop.jar
   skip_cleanup: true
   on:
     tags: true
+env:
+  global:
+  - secure: h+UAg0WdGb/mrc99zUwDPGJrQUUKQsVQeh32WjJ1ZWR+/V26j0bUbGQ+63m7nuS9iuLvCmiJaOVkHqnZZ89tWJLis0E7hxOF2COZdeJSjDZCweDrturhGr+PIv/ZynLxKdWKl2ygBAISOjvsUH0hbxv1S84+U1ULDIgfo3zlj2V1e9X67QFbHqHaC/cDOapHx6jF8U8DU/Tckn4E6Oa9XgvztBHEgMIsV4CmKSLCwi+sfd5mYKpYBinndqUlqtMB7UENO0IwXUMyhJaC+VQxjpXOkElYzdo68EWYrlsfxGnRBX4wmn22MshdWAv0417xohj8oraxJD8e6kWGzMP7xvrXzccIJXc1IqepmqkHZgAmuTNQ95/tdCGY2VT+eERHuODyQWGyeN1iU/OIfilfdDCVuXS4h9HF7HBwpcXQwQ0MsVzL1sk/Q+erzL5orfoeWLkalsZgy1VM5ooImbhXZHVAhJdwrac5R0uF51TUnK5huDnu9MB5WqHDc0jdLXvN2geXU935jB8fDQXoslSoGgVRYCzzjvT+m94w0JIFupLhyn+k/QkGS4lyL4pzhw54twoQQbDT4u2FRacQ4HInAbPqULrPSyUp1fP2vePqm3j82DS8ZF0ZBPcij3h0TaaoAl1iuSdLNu57xohAM3GMKO2O7oWMTJGgWETmMQYWe6w=
+  - secure: 2IA60R0gXy234XW3jD+W12wlrIsYH+FkV6lgdN4VhYFSg15N3SMc31B/w16+ZPKSjygLALOF3l4LFKtgBSbS70J7Nbe6DHYMRmkwilhpgk67G289Xj3/Qrl5/ZQBrVe2TSuZdL9sUP7sEQfgm31zd3/d+WY6aaDCpIrHDJT2fhE0v9wvLaiZ8zJDhhKShNLFnZcG+Mefm9Umm5gY8ofl//mu1O153T7RWjHc2bXAGeCVxd4EwsQoar3Pb4mImhV/ig//uUErfKuiEqJnNjIzTez/7uUiA6cx95N97RkuQPwYCOmnf1HB297ZT69WJlq1110TjBTHga/C+ntFpOQ/MIWPmaO0jOn1LzMGgv8tt0rn041ykCToH2OBuLUOOzRisCMqbx2iU5hP8Qn4bTJvnv7v2x4fK6tj+FioPEeZ1nSkA3C65Qdo3nWvmipgE0r/3u15H2AKXHn8rBdmNrZleWH23VFJq9i7YKe7LYQOJ8hbKjktjkNRmo54X1IP2zynIZ3Ika2mUBgMGmb/HEeeAd42RnKTas4B8BLQ1e0uSScjrjnpmXh3MXr5Tp9d546SgRp8rblZwHqfOUiLNUMQZ+TBFSJAjpoTyAdvd8aFBILrc10DR6rubUVtpbALVmsQ6x2XXVXFEZ+ddVAox7ZCOFFigDgPWcaDQQnuPu+A8jA=
+
+after_success:
+    "curl -T MCTrapsShop.jar -u $FTP_USER:$FTP_PASSWORD sftp://5.135.248.254/home/mcec/mcecroot/plugins"
