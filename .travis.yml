@@ -3,3 +3,10 @@ jdk:
   - oraclejdk8
 sudo: false
 script: mvn clean verify
+deploy:
+  provider: releases
+  api_key: "8b5033460493f16483b824a36f4977a5d29ecb02"
+  file: "MCTrapsShop.jar"
+  skip_cleanup: true
+  on:
+    tags: true
