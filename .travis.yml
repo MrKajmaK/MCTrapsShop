@@ -4,10 +4,12 @@ jdk:
 sudo: false
 script: mvn clean verify
 after_success: curl -T /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar
-  -u $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254:22/home/mcec/mcecroot/plugins
+  --user $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254:22/home/mcec/mcecroot/plugins
 branchers:
   only:
     - master
+  except:
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 deploy:
   provider: releases
   api_key:
@@ -16,8 +18,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: MrKajmaK/MCTrapsShop
-    all_branchers: true
-env:
-  global:
-  - secure: cnH7LChy9Yn37vyjEDyjt8d+zbZBadwHhaxlQstuJ/pzpftBwIXsNgo+ocvgn671zzZTRtKwdhQOTppnjxm+HlQRgdrV8O6r3UfheIpwOWBE0UUbBqyaEAMrOEQcugWZSFxVhaQT+zSN+GUNAsQHxOZP4Bys4wdu74mRdNba93te6Z6sCVv1YRjOMb7WrvQImC0lLsN4QeX+sKrCmQdO9ZBvySFrjD3T3DBIsPe70pFGyWs0erEzEuKpuwrLv/Y1A/Tm9IkvMmRIAKkx+iWQ1KC5CanHwlMabvBK1vwLWZcFTMRU/4layj+hOArTGltWx7yHiHehZA3ZtYhqZu2ERoIjkQfceSo3wrCQU6EPdcp0lZiJMm0cUbvNlyz2c6PkBuCg9D/tL9vgPLSBXTgL0Z/fb90O/TUyu+/OTL04EMzOd1YFVLWsMUgM1qMXcRcTPIJfgYhAqBJp7eDQSmR3uzPEVq5v1Kc9cmCsUkDHuZtZjDYOjHErtGb6m1/t6vtQQq49qWD/ETp7vmIew2Vn9fdtM05taGXpM320gn3dlh9jwjF2POyHn3kDKVUQamaQxVBVjaxsp/M06atANaHYqe5MHK8xjA6Lww8fp5NFHngyurIAcX7wOBpeeC8t5jhNhNOKZfwU7iaryX84RV/y+Rkgx0+XrvDFMfAkAFMUzT4=
-  - secure: dAR1oMxQbVNG7oUfo04mgTUKnFiSEno6sySsxR+p1X2KwXQ65ydD0vlZ+6CGRPp+/071TzYr1UihZokzYV/pi0fsowcUmW6+4gciXSrKZ5coavsvQc4PVs+9jKDYOp5egv4PD6Yr2lzaHVUagVei6WCivKJ8juwb7DtURw/Sy/eqR8x8kNXK+yvYwumfE47eJnDU3c39m89DaTRGT/ZP41lG4TgMBFPZeOJUzPB2CQiV39XAoQArlpxR/aIhnxp21i47szk1I+CSE2ELCSt8PtOQh7YTp0n05MF0Vy0mNlGZmlB5Oqwx4AMWGEz/BdiLAWdrzjwieWPKjV47h3aLUXVqTdSvAD8LXrWtCjINuzXuF61kvyyDY8KoyfkoLQLodh5x9grB0lO18J8KCLaM1juyA2PRSIWNbdowl9Bo+PwSr+A7NcgfEyzFeED1EXaRh50Xm3czY89YDGk0LNjLyE3WEDZjDkODcLb/7f484Sl6YPrydUdFSo5HiWi3fFi5KCaFa+1+SJbkaCPHOWDhSSfwXV7fE/n2oRamEFQ98XIyuP7qDdQwZvk3jzc9FbN+J3fN2NZdbZ3t0fwt0UVoKVXKCeBHrk/qYe5aRJHUGwHOfVJ6uIVvQsvhSImZJtLbZTohjQA3rBzM4YmytIzL/Igtiawh3vjZvvJmPrCktQw=
+    branch: master
