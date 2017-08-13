@@ -8,7 +8,7 @@ before_install:
 after_success:
   - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
   - chmod 770 .travis/deploy.sh
-  - printf "%s\n" $FTP_PASSWORD | .travis/deploy.sh
+  - .travis/deploy.exp
 branchers:
   only:
     - master

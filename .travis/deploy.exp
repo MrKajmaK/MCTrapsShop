@@ -1,0 +1,5 @@
+#!/usr/bin/env expect
+spawn -noecho deploy.sh
+expect "password:"
+send "$FTP_PASSWORD"
+interact
