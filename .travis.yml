@@ -3,13 +3,13 @@ jdk:
 - oraclejdk8
 sudo: false
 script: mvn clean verify
-after_success: curl -T /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar
-  --user $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254:22/home/mcec/mcecroot/plugins
+after_success: curl -T /home/travis/.m2/repository/eu/mctraps/shop/1.0.0/shop-1.0.0.jar
+  --user $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254:22/home/mcec/mcecroot/plugins --ftp-ssl-ccc
 branchers:
   only:
     - master
   except:
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    - /^untagged-(.*)$/
 deploy:
   provider: releases
   api_key:
