@@ -5,6 +5,7 @@ sudo: required
 script: mvn clean verify
 before_install:
   - sudo apt-get install -y rsync
+  - sudo apt-get install -y expect
 after_success:
   - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
   - chmod 770 .travis/deploy.sh
