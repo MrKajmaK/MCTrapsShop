@@ -48,3 +48,4 @@ fabric.properties
 MCTrapsShop.iml
 out/
 src/META-INF/
+/target/
