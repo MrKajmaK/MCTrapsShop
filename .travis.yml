@@ -7,7 +7,7 @@ before_install:
   - sudo apt-get install -y rsync
 after_success:
   - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
-  - RSYNC_PASSWORD='$FTP_PASSWORD' rsync -tv /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar $FTP_USER@5.135.248.254:home/mcec/mcecroot/plugins -o StrictHostKeyChecking=no
+  - RSYNC_PASSWORD='$FTP_PASSWORD' rsync -tv /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar $FTP_USER@5.135.248.254:home/mcec/mcecroot/plugins
 branchers:
   only:
     - master
