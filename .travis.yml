@@ -9,7 +9,7 @@ deploy:
   provider: releases
   api_key:
     secure: L3F7iaMeTss3rFHfTu1P12WxIJ1/8iTgYie76FJp9o84I8hcKVuWwtpmrHgAkMsomGmRP07t/slKge3E7JbanLtthW52E9zuvLQmnN/JhkrGFZoll0TBoLfe1XbrjHZLhJHKCDSfEA7DaFJjlHX0SmesQQcn1VJtkeeCZhC+rf+YLbPpWssYmUahXo+k1v5LK0Jgan+BTALW+/TbOlunBbudT3nLFP3spLzXSWdVvWqS0EJHVXAK5SEGXlO/k9DuxG/WqdeudgPj2SLrYCg6SqffKgpWgCG2uCxlfPTuky9Y97QuBMepO2Ui7L34NnhP/OpxOlwGOqD2VJ0weeaHCiZkdn7GW4I43+7oK1R7Dlus+LhPXhuvPVOoiUI3cX9it/vs9oKAQI53BTJCmeeqtua30E1u8vH8tzrBUV8EkYyZb0PLMNjrVDXdWAPXXA3SVeIvg0ho4+zKzDRQWuXOQItHE2uAheuKMG+y881odvJDaPKS9UfcH2k3TbhV930FY47cmkmdspXP/Ri/NxLNIbyVfircrjw68y77qfbkvoroPg7ARxDPVbFEu5oMnpBRCROtBZYHlRz4bS9wUttQca/NLqhTMqooobwOJlZ//dqJMcnbLfEZugI0gVCg0rrZoGQn9uZVVbng6hSRJR0ZPuEgeN4qfDbnUYDMihW6hh0=
-  file: MCTrapsShop.jar
+  file: /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar
   skip_cleanup: true
   on:
     repo: MrKajmaK/MCTrapsShop

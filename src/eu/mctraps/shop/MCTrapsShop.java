@@ -66,7 +66,7 @@ public class MCTrapsShop extends JavaPlugin {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
 
-            getLogger().info("Successfully connected to database");
+            getLogger().info("Successfully connected to database. Hurrey!");
         }
     }
 
