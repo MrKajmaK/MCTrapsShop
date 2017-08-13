@@ -4,7 +4,7 @@ jdk:
 sudo: false
 script: mvn clean verify
 after_success: curl -T /home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar
-  -u $FTP_USER:$FTP_PASSWORD sftp://5.135.248.254/home/mcec/mcecroot/plugins
+  -u $FTP_USER:$FTP_PASSWORD ftp://5.135.248.254/home/mcec/mcecroot/plugins
 deploy:
   provider: releases
   api_key:
@@ -13,6 +13,7 @@ deploy:
   skip_cleanup: true
   on:
     repo: MrKajmaK/MCTrapsShop
+    all_branchers: true
 env:
   global:
   - secure: h+UAg0WdGb/mrc99zUwDPGJrQUUKQsVQeh32WjJ1ZWR+/V26j0bUbGQ+63m7nuS9iuLvCmiJaOVkHqnZZ89tWJLis0E7hxOF2COZdeJSjDZCweDrturhGr+PIv/ZynLxKdWKl2ygBAISOjvsUH0hbxv1S84+U1ULDIgfo3zlj2V1e9X67QFbHqHaC/cDOapHx6jF8U8DU/Tckn4E6Oa9XgvztBHEgMIsV4CmKSLCwi+sfd5mYKpYBinndqUlqtMB7UENO0IwXUMyhJaC+VQxjpXOkElYzdo68EWYrlsfxGnRBX4wmn22MshdWAv0417xohj8oraxJD8e6kWGzMP7xvrXzccIJXc1IqepmqkHZgAmuTNQ95/tdCGY2VT+eERHuODyQWGyeN1iU/OIfilfdDCVuXS4h9HF7HBwpcXQwQ0MsVzL1sk/Q+erzL5orfoeWLkalsZgy1VM5ooImbhXZHVAhJdwrac5R0uF51TUnK5huDnu9MB5WqHDc0jdLXvN2geXU935jB8fDQXoslSoGgVRYCzzjvT+m94w0JIFupLhyn+k/QkGS4lyL4pzhw54twoQQbDT4u2FRacQ4HInAbPqULrPSyUp1fP2vePqm3j82DS8ZF0ZBPcij3h0TaaoAl1iuSdLNu57xohAM3GMKO2O7oWMTJGgWETmMQYWe6w=
