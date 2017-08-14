@@ -4,25 +4,35 @@ jdk:
 sudo: required
 script: mvn clean verify
 before_install:
-  - sudo apt-get install -y rsync
-  - sudo apt-get install -y expect
+- sudo apt-get install -y rsync
+- sudo apt-get install -y expect
 after_success:
-  - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
-  - chmod 770 .travis/deploy.sh
-  - chmod 770 .travis/deploy.exp
-  - .travis/deploy.exp
+- ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
+- chmod 770 .travis/deploy.sh
+- chmod 770 .travis/deploy.exp
+- ".travis/deploy.exp"
 branchers:
   only:
-    - master
+  - master
   except:
-    - /^untagged-(.*)$/
+  - "/^untagged-(.*)$/"
 deploy:
   provider: releases
   api_key:
-    secure: L3F7iaMeTss3rFHfTu1P12WxIJ1/8iTgYie76FJp9o84I8hcKVuWwtpmrHgAkMsomGmRP07t/slKge3E7JbanLtthW52E9zuvLQmnN/JhkrGFZoll0TBoLfe1XbrjHZLhJHKCDSfEA7DaFJjlHX0SmesQQcn1VJtkeeCZhC+rf+YLbPpWssYmUahXo+k1v5LK0Jgan+BTALW+/TbOlunBbudT3nLFP3spLzXSWdVvWqS0EJHVXAK5SEGXlO/k9DuxG/WqdeudgPj2SLrYCg6SqffKgpWgCG2uCxlfPTuky9Y97QuBMepO2Ui7L34NnhP/OpxOlwGOqD2VJ0weeaHCiZkdn7GW4I43+7oK1R7Dlus+LhPXhuvPVOoiUI3cX9it/vs9oKAQI53BTJCmeeqtua30E1u8vH8tzrBUV8EkYyZb0PLMNjrVDXdWAPXXA3SVeIvg0ho4+zKzDRQWuXOQItHE2uAheuKMG+y881odvJDaPKS9UfcH2k3TbhV930FY47cmkmdspXP/Ri/NxLNIbyVfircrjw68y77qfbkvoroPg7ARxDPVbFEu5oMnpBRCROtBZYHlRz4bS9wUttQca/NLqhTMqooobwOJlZ//dqJMcnbLfEZugI0gVCg0rrZoGQn9uZVVbng6hSRJR0ZPuEgeN4qfDbnUYDMihW6hh0=
+    secure:
+      secure: 7JgEeG3Y1kGVr1QfoeQmZSxJQqJMIW2bbkvLvT1zmKY9o9Bxr9FeEQHstlw13YF3Dm6oyzhBGU2LrZa0M55dERIjVTq8fTnN/f/NelbwNB16JBQN2wMtcIrVvHmCjtdrw9PM+GnanyXfg0uFTf3fNeO3j6xFrYtpmPol7Pm99rOU3YDFCdFWvkcnZbXs4eXwn2AeQcniEQ9B63Vm/XyDRlYkmE0qVZKCxX/bdb3Rf+5iCXFZzc6beM4s9Q1imFIOY6Szw30mVXZRUxMoSTVCFT4pgB+0lU+9bq8ZVLqq/oq/pMp9Kx7GFZLRX5odlo6NFSSptqW62vwBa2ztdRhygZfgBlnHX9LmS9YNcIFS0dJNlntDKOGz+V5lSPXr3jUHPXtk8Mura7F5efCaMIe8R2hHDam+tTBTbEy+iteMncdZXWosQxUjuwyQaUUG6x/eRF8NS13Z3uIDbTHZHc7mz4pnn0iQoyeAJrmFxlk3xqWw3OB1rqsXjOjUnIDxjZKosHHnExiZpBtAGK4TVA9KZb+FXSy2gh5itPGHv5EC6U+9dOFB9vxYi0i8O3ijmrQ5xUfPGCi0skA/txeWg/ZslxKFtZLtCSg7uvf+IHMunkltTfe9evVBPyIh+ZUtNgMAwgv5CgKmpmJf2xPRSJnHZcEeOnnagQP5TRcPT2nn1cw=
   file: "/home/travis/build/MrKajmaK/MCTrapsShop/target/MCTrapsShop.jar"
   skip_cleanup: true
   on:
     repo: MrKajmaK/MCTrapsShop
     branch: master
     tags: true
+notification:
+  pushover: 
+notifications:
+  pushover:
+    api_key:
+      secure: ZNn62C17rnIJcTrmappwoe8ot8TQp/pQOKqdNyYuzcaKpVmpYupWFkepmektG//zxuIMdKErCclYXDOQMyTTU1JnDGc9qnfUWs4ii5PhBRljvNuNc0XvFdhMNmr+6xXxhHoy60Dgwe8LyCazsaOVhs30zRyTkCVjjFrGJsSWT3KBWVJcCWbi2tmKKcrGOvPLN9yQiCa70D6sKYhR33rNVSrL30VKj1dyOUDCvpfaLo/MfZxc4DMDmBflThRrIH1f4pzprxn9VwYj6uEvnoaJtqSeF9I554l1og+dWfhBoyEhncAV3jHQeHE7b0FyMIabPxEl3hOpj3Ikb7/M5y/AQ9WnfORbBEpbKTyhQyiKaoAE0ta3W4H1UsZbSRhax23lyoAXJ5hBJxqvI/Fe2646aHuYNm5bP4sAtGxNEVKiC7pjjIO5FqVBPKMajVKayMiU+CPFw2L+WIFPttHT6Sn+FSTJUuX1ZIGxeqBvQbuSHo0JjO7+Ru3/RVvEOnYNM4CNboAestzN9bmZxsXIefFUE9FOPCAY7eX+e829CT8E1Ro8iThbpvmeeNawYiik64AXE5WOd44ASLcMxyVe0ho0bK/KPvrNZUnVJ0GW7BUR7iAO4kpPZyYUBXV1on2iVMtbdiTtBlfp6J47Pn0YnJuD/l/SL8UmZi2diLITT8/w8OI=
+    users:
+      secure: jgznJeg4bfvI6ZNREmJSU6kN3RZmQMxOVZgoHWVFN+0ShBE8bYCkIEB0vy0CAr493Iu+mmwN0yJTkn+kh0JuudxvLclMmlzOA74lVrnCwWx6SESVOFfdEJNcizu875pzFpsDo31z0fFi4LQ2e8yJTpNRcaaAwrnLLYMD48R/TLCgSBMt9yL7FHv68Ydyiv34UzOHtBFSsuku9+4Lxj57Q/r/JXdDmu6RRmDmW9yeAYDT/kAqfw+ANjgQLTXdEpQesX8lw52GmqcnFWfyggxOmDi0JIGPw0mWTSVLpUMwCvJqEaTXLDQ0z5uM0Nmj1WUuHb2EKvJ9TceC5LTf1IpGa8nEtH1hVV3bQ0qvVLD8fr2dj1UgkPWt3EsBlniAECsggk5JRPnAzhRmyaxWB4EiBKB1SX69rwq5yhGxUMcixq8PreW+0Skho2JUNiFM/JkA5pCmcyLk8TQB4w7w9hBTCA9+DBHsV8FW18XW9l3qPupLtQrKA9cBIehUtvPv4Hs+yFDwowsnbElHa+MUXwXfrt95T942IHIBKMVmrqQX7DKnFBV70ebIlOLGP4jsVy0i34W0Gr1H+6/aGXO8+92HIz8JVx3UJJo+nACO7Uo/gsRW7A/Rkl4UqFBGJwGmmysUo6icp0cAuVJ1vbPXUw9o3vHX3fUWOnbM9h7k98E4PbY=
+    template: "%{repository} (%{commit}) : %{message} %{foo} - Build details: %{build_url}"
