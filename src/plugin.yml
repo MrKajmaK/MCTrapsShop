@@ -13,14 +13,14 @@ commands:
     usage: /<command> <list|info|add|generate|remove|edit>
     permission: smsshop.voucher
 permissions:
-  tools.*:
+  tools.smsshop.*:
     description: Wszystkie uprawnienia pluginu
     children:
       smsshop.admin
       smsshop.voucher
-  tools.admin:
+  tools.smsshop.admin:
     description: "Pozwala na użycie głównej komendy"
     default: op
-  tools.voucher:
+  tools.smsshop.voucher:
     description: "Pozwala na obsługę voucherów"
     default: op

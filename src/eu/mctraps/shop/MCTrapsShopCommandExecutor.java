@@ -30,7 +30,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
             return false;
         }
         if (cmd.getName().equalsIgnoreCase("voucher")) {
-            if ((!(sender instanceof org.bukkit.entity.Player)) || (sender.hasPermission("tools.voucher"))) {
+            if ((!(sender instanceof org.bukkit.entity.Player)) || (sender.hasPermission("tools.smsshop.voucher"))) {
                 String vTable = this.plugin.config.getString("tables.vouchers");
                 String oTable = this.plugin.config.getString("tables.offers");
                 String hTable = this.plugin.config.getString("tables.history");
