@@ -16,6 +16,10 @@ import java.sql.Statement;
 public class MCTrapsShop extends JavaPlugin {
     FileConfiguration config;
 
+    public String vTable;
+    public String oTable;
+    public String hTable;
+
     Connection connection;
     public Statement statement;
     private String host, database, username, password;
@@ -36,6 +40,9 @@ public class MCTrapsShop extends JavaPlugin {
         database = config.getString("database.database");
         username = config.getString("database.username");
         password = config.getString("database.password");
+        vTable = config.getString("tables.vouchers");
+        oTable = config.getString("tables.offers");
+        hTable = config.getString("tables.history");
 
         BukkitRunnable r = new BukkitRunnable() {
             @Override
@@ -53,10 +60,6 @@ public class MCTrapsShop extends JavaPlugin {
         getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
         getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
     }
-
-    public String vTable = config.getString("tables.vouchers");
-    public String oTable = config.getString("tables.offers");
-    public String hTable = config.getString("tables.history");
 
     @Override
     public void onDisable() {
