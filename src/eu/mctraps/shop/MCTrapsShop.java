@@ -87,6 +87,7 @@ public class MCTrapsShop extends JavaPlugin {
         if(ci.playerInChat(event.getPlayer().getName())) {
             ci.dialog(event.getPlayer().getName(), event.getMessage(), event, this);
         }
+        event.getPlayer().sendMessage(String.valueOf(ci.playerInChat(event.getPlayer().getName())));
     }
 
     public static String colorify(String s) {
