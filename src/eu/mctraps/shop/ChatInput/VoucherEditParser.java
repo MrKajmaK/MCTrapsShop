@@ -57,13 +57,15 @@ public class VoucherEditParser extends ChatInputStuff {
                     if (message.matches("[A-Za-z0-9]{10}")) {
                         v.setCode(message);
                         stage++;
-                        Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry, wpisz L aby zostawic) §b[" + v.getUses() + "]");
+                        String uses = Integer.toString(v.getUses());
+                        Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry, wpisz L aby zostawic) §b[" + uses + "]");
                     } else {
                         Bukkit.getPlayer(username).sendMessage("§4Blad: §cvoucher moze zawierac duze i male litery alfabetu lacinskiego i cyfry i musi miec dlugosc 10");
                     }
                 } else {
                     stage++;
-                    Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry, wpisz L aby zostawic) §b[" + v.getUses() + "]");
+                    String uses = Integer.toString(v.getUses());
+                    Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry, wpisz L aby zostawic) §b[" + uses + "]");
                 }
                 return;
             } else if (stage == 1) {
@@ -72,7 +74,8 @@ public class VoucherEditParser extends ChatInputStuff {
                         int uses = Integer.parseInt(message);
                         v.setUses(uses);
                         stage++;
-                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + v.getOffer() + "]");
+                        String offer = Integer.toString(v.getOffer());
+                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
                         ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.oTable);
                         while (result.next()) {
                             Bukkit.getPlayer(username).sendMessage("  §7#" + result.getInt("id") + " §6" + result.getString("name"));
@@ -82,11 +85,13 @@ public class VoucherEditParser extends ChatInputStuff {
                     } catch (SQLException e) {
                         e.printStackTrace();
                         Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas laczenia z baza danych");
-                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + v.getOffer() + "]");
+                        String offer = Integer.toString(v.getOffer());
+                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
                         stage++;
                     }
                 } else {
-                    Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + v.getOffer() + "]");
+                    String offer = Integer.toString(v.getOffer());
+                    Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
                     stage++;
                 }
                 return;
@@ -102,9 +107,9 @@ public class VoucherEditParser extends ChatInputStuff {
                         Bukkit.getPlayer(username).sendMessage("§4Blad: §cmozesz uzywac tylko cyfr!");
                     }
                 } else {
+                    stage++;
                     String timed = (v.getTimed() == 1) ? "tak" : "nie";
                     Bukkit.getPlayer(username).sendMessage("§9Czy kod ma byc ograniczony czasowo? §6(tak/nie lub L aby zostawic) §b[" + timed + "]");
-                    stage++;
                 }
                 return;
             } else if(stage == 3) {
