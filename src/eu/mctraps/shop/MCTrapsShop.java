@@ -57,7 +57,7 @@ public class MCTrapsShop extends JavaPlugin {
         };
         r.runTaskAsynchronously(this);
 
-        getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
 
         getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
         getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
