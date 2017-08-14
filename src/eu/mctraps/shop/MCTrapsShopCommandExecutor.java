@@ -68,31 +68,36 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                 }
                 if ((args[0].equalsIgnoreCase("info")) && (args.length == 2)) {
                     try {
-                        ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = '" + args[1] + "' ORDER BY uses DESC LIMIT 1");
-                        int id = 0;
-                        int uses = 0;
-                        int offerid = 0;
-                        int timed = 0;
-                        String code = "";
-                        String timedText = "";
-                        String end = "";
-                        while (result.next()) {
-                            id = result.getInt("id");
-                            code = result.getString("code");
-                            uses = result.getInt("uses");
-                            offerid = result.getInt("offer");
-                            timed = result.getInt("timed");
-                            timedText = timed == 1 ? "tak" : "nie";
-                            end = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(result.getTimestamp("endtime"));
+                        ResultSet r = this.plugin.statement.executeQuery("SELECT COUNT(*) FROM " + vTable);
+                        int count = 0;
+                        while(r.next()) {
+                            count = r.getInt(1);
                         }
+                        if(count != 0) {
+                            ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = '" + args[1] + "' ORDER BY uses DESC LIMIT 1");
+                            int id = 0;
+                            int uses = 0;
+                            int offerid = 0;
+                            int timed = 0;
+                            String code = "";
+                            String timedText = "";
+                            String end = "";
+                            while (result.next()) {
+                                id = result.getInt("id");
+                                code = result.getString("code");
+                                uses = result.getInt("uses");
+                                offerid = result.getInt("offer");
+                                timed = result.getInt("timed");
+                                timedText = timed == 1 ? "tak" : "nie";
+                                end = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(result.getTimestamp("endtime"));
+                            }
 
-                        ResultSet offerResult = this.plugin.statement.executeQuery("SELECT * FROM " + oTable + " WHERE id = '" + offerid + "' LIMIT 1");
-                        String offername = "Brak usługi o takim ID";
-                        while (offerResult.next()) {
-                            offername = offerResult.getString("name");
-                        }
+                            ResultSet offerResult = this.plugin.statement.executeQuery("SELECT * FROM " + oTable + " WHERE id = '" + offerid + "' LIMIT 1");
+                            String offername = "Brak usługi o takim ID";
+                            while (offerResult.next()) {
+                                offername = offerResult.getString("name");
+                            }
 
-                        if(!result.next()) {
                             sender.sendMessage("§7Informacje o voucherze §6#" + id);
                             sender.sendMessage(" §9Kod: §7" + code);
                             sender.sendMessage(" §9Pozostale uzycia: §7" + uses);
@@ -102,7 +107,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                                 sender.sendMessage(" §9Oferta wazna do: §7" + end);
                             }
                         } else {
-                            sender.sendMessage("§cVoucher o takim id nie istnieje");
+                            sender.sendMessage("§cVoucher o takim ID nie istnieje");
                         }
 
                         return true;
