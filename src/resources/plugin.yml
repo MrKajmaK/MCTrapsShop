@@ -14,7 +14,7 @@ commands:
     permission: smsshop.voucher
 permissions:
   tools.smsshop.*:
-    description: Wszystkie uprawnienia pluginu
+    description: "Wszystkie uprawnienia pluginu"
     children:
       smsshop.admin
       smsshop.voucher
