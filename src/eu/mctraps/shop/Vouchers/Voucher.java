@@ -80,7 +80,7 @@ public class Voucher {
         code = sb.toString();
     }
 
-    public boolean push() {
+    public boolean create() {
         if("x" + code + uses + offer + timed + endtime != "x") {
             if(timed == 1) {
                 try {
@@ -93,6 +93,30 @@ public class Voucher {
             } else {
                 try {
                     plugin.statement.executeUpdate("INSERT INTO " + plugin.vTable + " (code, uses, offer) VALUES ('" + code + "', '" + uses + "', '" + offer + "')");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public boolean push() {
+        if ("x" + code + uses + offer + timed + endtime != "x") {
+            if(timed == 1) {
+                try {
+                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "', endtime='" + endtime + "')");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            } else {
+                try {
+                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "')");
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;

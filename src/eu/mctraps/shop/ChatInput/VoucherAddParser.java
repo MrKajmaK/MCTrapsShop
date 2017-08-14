@@ -5,7 +5,6 @@ import eu.mctraps.shop.Vouchers.Voucher;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +33,6 @@ public class VoucherAddParser extends ChatInputStuff {
 
         if(!(message.toLowerCase().contains("cancel"))) {
             if (stage == 0) {
-                // uses, offer, timed, endtime
                 v = new Voucher(plugin);
                 if (!(message.toLowerCase().contains("gen"))) {
                     if (message.matches("[A-Za-z0-9]{10}")) {
@@ -42,7 +40,7 @@ public class VoucherAddParser extends ChatInputStuff {
                         stage++;
                         Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry)");
                     } else {
-                        Bukkit.getPlayer(username).sendMessage("§cBlad: voucher moze zawierac duze i male litery alfabetu lacinskiego i cyfry i musi miec dlugosc 10. Wpisz §6\"gen\" §caby wygenerowac");
+                        Bukkit.getPlayer(username).sendMessage("§4Blad: §cvoucher moze zawierac duze i male litery alfabetu lacinskiego i cyfry i musi miec dlugosc 10. Wpisz §6\"gen\" §caby wygenerowac");
                     }
                 } else {
                     v.genCode();
@@ -62,7 +60,7 @@ public class VoucherAddParser extends ChatInputStuff {
                         Bukkit.getPlayer(username).sendMessage("  §7#" + result.getInt("id") + " §6" + result.getString("name"));
                     }
                 } catch (NumberFormatException e) {
-                    Bukkit.getPlayer(username).sendMessage("§cBlad: mozesz uzywac tylko cyfr!");
+                    Bukkit.getPlayer(username).sendMessage("§4Blad: §cmozesz uzywac tylko cyfr!");
                 } catch (SQLException e) {
                     e.printStackTrace();
                     Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas laczenia z baza danych");
@@ -77,7 +75,7 @@ public class VoucherAddParser extends ChatInputStuff {
                     stage++;
                     Bukkit.getPlayer(username).sendMessage("§9Czy kod ma byc ograniczony czasowo? §6(tak/nie)");
                 } catch (NumberFormatException e) {
-                    Bukkit.getPlayer(username).sendMessage("§cBlad: mozesz uzywac tylko cyfr!");
+                    Bukkit.getPlayer(username).sendMessage("§4Blad: §cmozesz uzywac tylko cyfr!");
                 }
                 return;
             } else if(stage == 3) {
@@ -88,7 +86,7 @@ public class VoucherAddParser extends ChatInputStuff {
                 } else if(message.toLowerCase().contains("nie")) {
                     v.setTimed(0);
                     Bukkit.getPlayer(username).sendMessage("§9Pomyslnie stworzono voucher. Wysylanie do bazy danych...");
-                    boolean sent = v.push();
+                    boolean sent = v.create();
                     if(sent) {
                         Bukkit.getPlayer(username).sendMessage("§2Pomyslnie wyslano voucher do bazy danych :)");
                     } else {
@@ -97,7 +95,7 @@ public class VoucherAddParser extends ChatInputStuff {
                     stage = 9000;
                     map.removePlayer(username);
                 } else {
-                    Bukkit.getPlayer(username).sendMessage("§cBlad: powinienes odpisac §6\"tak\" §calbo §6\"nie\"");
+                    Bukkit.getPlayer(username).sendMessage("§4Blad: §cpowinienes odpisac §6\"tak\" §calbo §6\"nie\"");
                 }
                 return;
             } else if(stage == 4) {
@@ -109,7 +107,7 @@ public class VoucherAddParser extends ChatInputStuff {
 
                     Bukkit.getPlayer(username).sendMessage("§9Pomyslnie stworzono voucher. Wysylanie do bazy danych...");
 
-                    boolean sent = v.push();
+                    boolean sent = v.create();
                     if(sent) {
                         Bukkit.getPlayer(username).sendMessage("§9Pomyslnie wyslano voucher do bazy danych :)");
                     } else {
@@ -117,6 +115,8 @@ public class VoucherAddParser extends ChatInputStuff {
                     }
                     stage = 9000;
                     map.removePlayer(username);
+                } else {
+                    Bukkit.getPlayer(username).sendMessage("§4Blad: §czly format daty");
                 }
             }
         } else {

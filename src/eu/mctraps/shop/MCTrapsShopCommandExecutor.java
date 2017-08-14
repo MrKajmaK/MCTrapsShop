@@ -4,9 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import eu.mctraps.shop.ChatInput.VoucherAddParser;
+import eu.mctraps.shop.ChatInput.VoucherEditParser;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,18 +41,20 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                     if (args.length == 1) {
                         try {
                             ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.vTable);
-                            List<String> vouchers = new ArrayList();
+                            List<String> vouchers = new ArrayList<>();
                             while (result.next()) {
                                 String code = result.getString("code");
                                 int uses = result.getInt("uses");
                                 int id = result.getInt("id");
-                                String voucher = (uses == 0) ? " §7" + code + " (#" + id + ")" : " §a" + code + " (#" + id + ")";
+                                int timed = result.getInt("timed");
+                                Date end = result.getTimestamp("endtime");
+                                String voucher = (uses == 0 || (timed == 1 && end.after(new Date()))) ? " §7" + code + " (#" + id + ")" : " §a" + code + " (#" + id + ")";
                                 vouchers.add(voucher);
                             }
 
                             sender.sendMessage("§7Lista aktualnych voucherów:");
                             for (int i = 0; i < vouchers.size(); i++) {
-                                sender.sendMessage((String) vouchers.get(i));
+                                sender.sendMessage(vouchers.get(i));
                             }
                             sender.sendMessage("§9Aby dowiedziec sie wiecej o danym voucherze, uzyj komendy: §7/" + label + " info §6<id>");
                         } catch (SQLException e) {
@@ -155,6 +159,38 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                         }
                     } else {
                         sender.sendMessage("§cPoprawne uzycie: §7/" + label + " remove <id>");
+                        return true;
+                    }
+                } else if((args[0].equalsIgnoreCase("edit"))) {
+                    if(args.length == 2) {
+                        if (sender instanceof Player) {
+                            try {
+                                ResultSet r = plugin.statement.executeQuery("SELECT COUNT(*) FROM " + plugin.vTable + " WHERE id='" + args[1] + "'");
+                                int count = 0;
+                                while (r.next()) {
+                                    count = r.getInt(1);
+                                }
+
+                                if(count == 1) {
+                                    ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.vTable + " WHERE id='" + args[1] + "'");
+                                    String code = "";
+                                    while(result.next()) {
+                                        code = result.getString("code");
+                                    }
+                                    sender.sendMessage("§7Uruchomiono edytor voucherow. W kazdej chwili mozesz wpisac §6\"cancel\" §7aby wyjsc.");
+                                    sender.sendMessage("§9Podaj kod (voucher) lub L aby zostawic aktualny §6(10 znakow A-Za-z0-9) §b[" + code + "]");
+                                    plugin.ci.addToMap((Player) sender, new VoucherEditParser(result, plugin));
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                sender.sendMessage("§cWystapil blad w trakcie laczenia z baza danych");
+                                return true;
+                            }
+                        }
+
+                        return true;
+                    } else {
+                        sender.sendMessage("§cPoprawne uzycie: §7/" + label + " edit <id>");
                         return true;
                     }
                 }
