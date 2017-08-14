@@ -112,8 +112,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                         sender.sendMessage("§cWystapil blad w trakcie laczenia z baza danych");
                         return true;
                     }
-                }
-                if((args[0].equalsIgnoreCase("add")) && (args.length == 2)) {
+                } else if((args[0].equalsIgnoreCase("add")) && (args.length == 1)) {
                     if(sender instanceof Player) {
                         sender.sendMessage("§7Uruchomiono kreator voucherow. W kazdej chwili mozesz wpisac §6\"cancel\" §7aby wyjsc.");
                         sender.sendMessage("§9Podaj kod (voucher) §6(10 znakow A-Za-z0-9)");
