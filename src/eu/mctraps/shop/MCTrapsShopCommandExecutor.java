@@ -113,12 +113,13 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                         return true;
                     }
                 } else if((args[0].equalsIgnoreCase("add")) && (args.length == 2)) {
-                    // code, uses, offer, timed, endtime
                     if(sender instanceof Player) {
                         sender.sendMessage("§7Uruchomiono kreator voucherow. W kazdej chwili mozesz wpisac §6\"cancel\" §7aby wyjsc.");
                         sender.sendMessage("§9Podaj kod (voucher) §6(10 znakow A-Za-z0-9)");
                         plugin.ci.addToMap((Player) sender, new VoucherAddParser());
                     }
+
+                    return true;
                 }
             } else {
                 sender.sendMessage("§cNie masz dostepu! :(");
