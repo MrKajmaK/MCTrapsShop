@@ -66,8 +66,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                     sender.sendMessage("§cPoprawne uzycie: §7/voucher list");
                     return true;
                 }
-                if ((args[0].equalsIgnoreCase("info")) &&
-                        (args.length == 2)) {
+                if ((args[0].equalsIgnoreCase("info")) && (args.length == 2)) {
                     try {
                         ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = '" + args[1] + "' ORDER BY uses DESC LIMIT 1");
                         int id = 0;
@@ -93,13 +92,17 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                             offername = offerResult.getString("name");
                         }
 
-                        sender.sendMessage("§7Informacje o voucherze §6#" + id);
-                        sender.sendMessage(" §9Kod: §7" + code);
-                        sender.sendMessage(" §9Pozostale uzycia: §7" + uses);
-                        sender.sendMessage(" §9Kod do uslugi: §7#" + offerid + " §7(§c" + offername + "§7)");
-                        sender.sendMessage(" §9Oferta ograniczona czasowo?: §7" + timedText);
-                        if (timed == 1) {
-                            sender.sendMessage(" §9Oferta wazna do: §7" + end);
+                        if(!result.next()) {
+                            sender.sendMessage("§7Informacje o voucherze §6#" + id);
+                            sender.sendMessage(" §9Kod: §7" + code);
+                            sender.sendMessage(" §9Pozostale uzycia: §7" + uses);
+                            sender.sendMessage(" §9Kod do uslugi: §7#" + offerid + " §7(§c" + offername + "§7)");
+                            sender.sendMessage(" §9Oferta ograniczona czasowo?: §7" + timedText);
+                            if (timed == 1) {
+                                sender.sendMessage(" §9Oferta wazna do: §7" + end);
+                            }
+                        } else {
+                            sender.sendMessage("§cVoucher o takim id nie istnieje");
                         }
 
                         return true;
