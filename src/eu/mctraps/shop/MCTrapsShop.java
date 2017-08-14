@@ -1,7 +1,10 @@
 package eu.mctraps.shop;
 
+import eu.mctraps.shop.ChatInput.ChatInput;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -9,14 +12,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.regex.Pattern;
 
 public class MCTrapsShop extends JavaPlugin {
     FileConfiguration config;
 
+    public String vTable = config.getString("tables.vouchers");
+    public String oTable = config.getString("tables.offers");
+    public String hTable = config.getString("tables.history");
+
     Connection connection;
-    Statement statement;
+    public Statement statement;
     private String host, database, username, password;
     private int port;
+
+    ChatInput ci = new ChatInput();
 
     @Override
     public void onEnable() {
@@ -67,6 +79,13 @@ public class MCTrapsShop extends JavaPlugin {
             connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password);
 
             getLogger().info("Successfully connected to database. Hurrey!");
+        }
+    }
+
+    @EventHandler
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        if(ci.playerInChat(event.getPlayer().getName())) {
+            ci.dialog(event.getPlayer().getName(), event.getMessage(), event, this);
         }
     }
 

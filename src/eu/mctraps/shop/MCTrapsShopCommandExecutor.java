@@ -2,15 +2,15 @@ package eu.mctraps.shop;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.mctraps.shop.ChatInput.VoucherAddParser;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 public class MCTrapsShopCommandExecutor implements CommandExecutor {
     private final MCTrapsShop plugin;
@@ -31,17 +31,13 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
         }
         if (cmd.getName().equalsIgnoreCase("voucher")) {
             if ((!(sender instanceof org.bukkit.entity.Player)) || (sender.hasPermission("tools.smsshop.voucher"))) {
-                String vTable = this.plugin.config.getString("tables.vouchers");
-                String oTable = this.plugin.config.getString("tables.offers");
-                String hTable = this.plugin.config.getString("tables.history");
-
                 if (args.length == 0) {
                     return false;
                 }
                 if (args[0].equalsIgnoreCase("list")) {
                     if (args.length == 1) {
                         try {
-                            ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + vTable);
+                            ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.vTable);
                             List<String> vouchers = new ArrayList();
                             while (result.next()) {
                                 String code = result.getString("code");
@@ -68,13 +64,13 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                 }
                 if ((args[0].equalsIgnoreCase("info")) && (args.length == 2)) {
                     try {
-                        ResultSet r = this.plugin.statement.executeQuery("SELECT COUNT(*) FROM " + vTable + " WHERE id = '" + args[1] + "'");
+                        ResultSet r = this.plugin.statement.executeQuery("SELECT COUNT(*) FROM " + plugin.vTable + " WHERE id = '" + args[1] + "'");
                         int count = 0;
                         while(r.next()) {
                             count = r.getInt(1);
                         }
                         if(count != 0) {
-                            ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + vTable + " WHERE id = '" + args[1] + "' ORDER BY uses DESC LIMIT 1");
+                            ResultSet result = this.plugin.statement.executeQuery("SELECT * FROM " + plugin.vTable + " WHERE id = '" + args[1] + "' ORDER BY uses = 0 ASC, id ASC LIMIT 1");
                             int id = 0;
                             int uses = 0;
                             int offerid = 0;
@@ -92,7 +88,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                                 end = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(result.getTimestamp("endtime"));
                             }
 
-                            ResultSet offerResult = this.plugin.statement.executeQuery("SELECT * FROM " + oTable + " WHERE id = '" + offerid + "' LIMIT 1");
+                            ResultSet offerResult = this.plugin.statement.executeQuery("SELECT * FROM " + plugin.oTable + " WHERE id = '" + offerid + "' LIMIT 1");
                             String offername = "Brak usługi o takim ID";
                             while (offerResult.next()) {
                                 offername = offerResult.getString("name");
@@ -115,6 +111,13 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                         e.printStackTrace();
                         sender.sendMessage("§cWystapil blad w trakcie laczenia z baza danych");
                         return true;
+                    }
+                } else if((args[0].equalsIgnoreCase("add")) && (args.length == 2)) {
+                    // code, uses, offer, timed, endtime
+                    if(sender instanceof Player) {
+                        sender.sendMessage("§7Uruchomiono kreator voucherow. W kazdej chwili mozesz wpisac §6\"cancel\" §7aby wyjsc.");
+                        sender.sendMessage("§9Podaj kod (voucher) §6(10 znakow A-Za-z0-9)");
+                        plugin.ci.addToMap((Player) sender, new VoucherAddParser());
                     }
                 }
             } else {

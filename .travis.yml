@@ -11,6 +11,7 @@ after_success:
 - chmod 770 .travis/deploy.sh
 - chmod 770 .travis/deploy.exp
 - ".travis/deploy.exp"
+- '.travis/notification.sh "%{repository} (%{commit}) : %{message} - Build details: %{build_url}"'
 branchers:
   only:
   - master
@@ -27,12 +28,3 @@ deploy:
     repo: MrKajmaK/MCTrapsShop
     branch: master
     tags: true
-notification:
-  pushover: 
-notifications:
-  pushover:
-    api_key:
-      secure: ZNn62C17rnIJcTrmappwoe8ot8TQp/pQOKqdNyYuzcaKpVmpYupWFkepmektG//zxuIMdKErCclYXDOQMyTTU1JnDGc9qnfUWs4ii5PhBRljvNuNc0XvFdhMNmr+6xXxhHoy60Dgwe8LyCazsaOVhs30zRyTkCVjjFrGJsSWT3KBWVJcCWbi2tmKKcrGOvPLN9yQiCa70D6sKYhR33rNVSrL30VKj1dyOUDCvpfaLo/MfZxc4DMDmBflThRrIH1f4pzprxn9VwYj6uEvnoaJtqSeF9I554l1og+dWfhBoyEhncAV3jHQeHE7b0FyMIabPxEl3hOpj3Ikb7/M5y/AQ9WnfORbBEpbKTyhQyiKaoAE0ta3W4H1UsZbSRhax23lyoAXJ5hBJxqvI/Fe2646aHuYNm5bP4sAtGxNEVKiC7pjjIO5FqVBPKMajVKayMiU+CPFw2L+WIFPttHT6Sn+FSTJUuX1ZIGxeqBvQbuSHo0JjO7+Ru3/RVvEOnYNM4CNboAestzN9bmZxsXIefFUE9FOPCAY7eX+e829CT8E1Ro8iThbpvmeeNawYiik64AXE5WOd44ASLcMxyVe0ho0bK/KPvrNZUnVJ0GW7BUR7iAO4kpPZyYUBXV1on2iVMtbdiTtBlfp6J47Pn0YnJuD/l/SL8UmZi2diLITT8/w8OI=
-    users:
-      secure: jgznJeg4bfvI6ZNREmJSU6kN3RZmQMxOVZgoHWVFN+0ShBE8bYCkIEB0vy0CAr493Iu+mmwN0yJTkn+kh0JuudxvLclMmlzOA74lVrnCwWx6SESVOFfdEJNcizu875pzFpsDo31z0fFi4LQ2e8yJTpNRcaaAwrnLLYMD48R/TLCgSBMt9yL7FHv68Ydyiv34UzOHtBFSsuku9+4Lxj57Q/r/JXdDmu6RRmDmW9yeAYDT/kAqfw+ANjgQLTXdEpQesX8lw52GmqcnFWfyggxOmDi0JIGPw0mWTSVLpUMwCvJqEaTXLDQ0z5uM0Nmj1WUuHb2EKvJ9TceC5LTf1IpGa8nEtH1hVV3bQ0qvVLD8fr2dj1UgkPWt3EsBlniAECsggk5JRPnAzhRmyaxWB4EiBKB1SX69rwq5yhGxUMcixq8PreW+0Skho2JUNiFM/JkA5pCmcyLk8TQB4w7w9hBTCA9+DBHsV8FW18XW9l3qPupLtQrKA9cBIehUtvPv4Hs+yFDwowsnbElHa+MUXwXfrt95T942IHIBKMVmrqQX7DKnFBV70ebIlOLGP4jsVy0i34W0Gr1H+6/aGXO8+92HIz8JVx3UJJo+nACO7Uo/gsRW7A/Rkl4UqFBGJwGmmysUo6icp0cAuVJ1vbPXUw9o3vHX3fUWOnbM9h7k98E4PbY=
-    template: "%{repository} (%{commit}) : %{message} %{foo} - Build details: %{build_url}"
