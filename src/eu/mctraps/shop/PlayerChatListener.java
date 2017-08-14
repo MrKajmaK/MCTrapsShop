@@ -16,6 +16,5 @@ public class PlayerChatListener implements Listener {
         if(plugin.ci.playerInChat(event.getPlayer().getName())) {
             plugin.ci.dialog(event.getPlayer().getName(), event.getMessage(), event, plugin);
         }
-        event.getPlayer().sendMessage(String.valueOf(plugin.ci.playerInChat(event.getPlayer().getName())));
     }
 }

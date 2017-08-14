@@ -48,6 +48,7 @@ public class VoucherAddParser extends ChatInputStuff {
                     v.genCode();
                     Bukkit.getPlayer(username).sendMessage("§2Pomyslnie wygenerowano kod §6(" + v.getCode() + ")");
                     stage++;
+                    Bukkit.getPlayer(username).sendMessage("§9Ile razy kod moze zostac uzyty? §6(cyfry)");
                 }
                 return;
             } else if (stage == 1) {
