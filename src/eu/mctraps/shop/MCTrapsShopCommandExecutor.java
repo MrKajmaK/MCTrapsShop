@@ -68,7 +68,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                 }
                 if ((args[0].equalsIgnoreCase("info")) && (args.length == 2)) {
                     try {
-                        ResultSet r = this.plugin.statement.executeQuery("SELECT COUNT(*) FROM " + vTable);
+                        ResultSet r = this.plugin.statement.executeQuery("SELECT COUNT(*) FROM " + vTable + " WHERE id = '" + args[1] + "'");
                         int count = 0;
                         while(r.next()) {
                             count = r.getInt(1);
