@@ -10,8 +10,8 @@ commands:
     permission: tools.smsshop.admin
   voucher:
     description: "Komenda do obsługi voucherów"
-    alias: [vouchers]
-    usage: /<command> <list|info|add|generate|remove|edit>
+    aliases: [vouchers]
+    usage: /<command> <list|info|add|remove|edit>
     permission: tools.smsshop.voucher
 permissions:
   tools.smsshop.*:

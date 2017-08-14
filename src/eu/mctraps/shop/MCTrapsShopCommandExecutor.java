@@ -120,6 +120,23 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                     }
 
                     return true;
+                } else if((args[0].equalsIgnoreCase("remove")) && (args.length == 2)) {
+                    try {
+                        ResultSet result = plugin.statement.executeQuery("SELECT COUNT(*) FROM " + plugin.vTable + " WHERE id = '" + args[1] + "'");
+                        int count = 0;
+                        while(result.next()) {
+                            count = result.getInt(1);
+                        }
+
+                        if(count == 1) {
+                            plugin.statement.executeUpdate("DELETE FROM " + plugin.vTable + " WHERE id='" + args[1] + "'");
+                            sender.sendMessage("§2Pomyslnie usunieto voucher :)");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        sender.sendMessage("§cWystapil blad w trakcie laczenia z baza danych");
+                        return true;
+                    }
                 }
             } else {
                 sender.sendMessage("§cNie masz dostepu! :(");

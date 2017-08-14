@@ -107,9 +107,11 @@ public class VoucherAddParser extends ChatInputStuff {
                     Timestamp endtime = new Timestamp(time);
                     v.setEndtime(endtime);
 
+                    Bukkit.getPlayer(username).sendMessage("§9Pomyslnie stworzono voucher. Wysylanie do bazy danych...");
+
                     boolean sent = v.push();
                     if(sent) {
-                        Bukkit.getPlayer(username).sendMessage("§9Pomyslnie stworzono voucher. Wysylanie do bazy danych...");
+                        Bukkit.getPlayer(username).sendMessage("§9Pomyslnie wyslano voucher do bazy danych :)");
                     } else {
                         Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas wysylania vouchera do bazy danych :(");
                     }
