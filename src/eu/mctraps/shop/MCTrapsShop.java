@@ -57,6 +57,8 @@ public class MCTrapsShop extends JavaPlugin {
         };
         r.runTaskAsynchronously(this);
 
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(), this);
+
         getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
         getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
     }
@@ -80,14 +82,6 @@ public class MCTrapsShop extends JavaPlugin {
 
             getLogger().info("Successfully connected to database. Hurrey!");
         }
-    }
-
-    @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        if(ci.playerInChat(event.getPlayer().getName())) {
-            ci.dialog(event.getPlayer().getName(), event.getMessage(), event, this);
-        }
-        event.getPlayer().sendMessage(String.valueOf(ci.playerInChat(event.getPlayer().getName())));
     }
 
     public static String colorify(String s) {
