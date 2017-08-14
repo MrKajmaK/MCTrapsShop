@@ -48,7 +48,7 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                                 int id = result.getInt("id");
                                 int timed = result.getInt("timed");
                                 Date end = result.getTimestamp("endtime");
-                                String voucher = (uses == 0 || (timed == 1 && end.after(new Date()))) ? " §7" + code + " (#" + id + ")" : " §a" + code + " (#" + id + ")";
+                                String voucher = (uses == 0 || (timed == 1 && end.getTime() > new Date().getTime())) ? " §7" + code + " (#" + id + ")" : " §a" + code + " (#" + id + ")";
                                 vouchers.add(voucher);
                             }
 
