@@ -12,16 +12,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.regex.Pattern;
 
 public class MCTrapsShop extends JavaPlugin {
     FileConfiguration config;
-
-    public String vTable = config.getString("tables.vouchers");
-    public String oTable = config.getString("tables.offers");
-    public String hTable = config.getString("tables.history");
 
     Connection connection;
     public Statement statement;
@@ -60,6 +53,10 @@ public class MCTrapsShop extends JavaPlugin {
         getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
         getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
     }
+
+    public String vTable = config.getString("tables.vouchers");
+    public String oTable = config.getString("tables.offers");
+    public String hTable = config.getString("tables.history");
 
     @Override
     public void onDisable() {
