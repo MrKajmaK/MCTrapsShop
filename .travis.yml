@@ -10,6 +10,7 @@ after_success:
 - ssh-keyscan 5.135.248.254 >> ~/.ssh/known_hosts
 - chmod 770 .travis/deploy.sh
 - chmod 770 .travis/deploy.exp
+- chmod 770 .travis/notification.sh
 - ".travis/deploy.exp"
 - '.travis/notification.sh "%{repository} (%{commit}) : %{message} - Build details: %{build_url}"'
 branchers:
