@@ -90,9 +90,21 @@ public class VoucherEditParser extends ChatInputStuff {
                         stage++;
                     }
                 } else {
-                    String offer = Integer.toString(v.getOffer());
-                    Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
-                    stage++;
+                    try {
+                        stage++;
+                        ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.oTable);
+                        String offer = Integer.toString(v.getOffer());
+                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
+                        while (result.next()) {
+                            Bukkit.getPlayer(username).sendMessage("  §7#" + result.getInt("id") + " §6" + result.getString("name"));
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas laczenia z baza danych ");
+                        String offer = Integer.toString(v.getOffer());
+                        Bukkit.getPlayer(username).sendMessage("§9Do ktorej oferty przypisac voucher? §6(wpisz id lub L aby zostawic) §b[" + offer + "]");
+                        stage++;
+                    }
                 }
                 return;
             } else if(stage == 2) {
