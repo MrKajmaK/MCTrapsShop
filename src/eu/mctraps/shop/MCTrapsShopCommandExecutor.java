@@ -1,5 +1,13 @@
 package eu.mctraps.shop;
 
+import eu.mctraps.shop.ChatInput.VoucherAddParser;
+import eu.mctraps.shop.ChatInput.VoucherEditParser;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import ActionBarAPI.ActionBar;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -7,12 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import eu.mctraps.shop.ChatInput.VoucherAddParser;
-import eu.mctraps.shop.ChatInput.VoucherEditParser;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import static eu.mctraps.shop.MCTrapsShop.colorify;
 
 public class MCTrapsShopCommandExecutor implements CommandExecutor {
     private final MCTrapsShop plugin;
@@ -25,16 +28,22 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
         if (cmd.getName().equalsIgnoreCase("smsshop")) {
             if (args.length == 0) {
                 sender.sendMessage("§7Glowne komendy pluginu:");
-                sender.sendMessage(" §7/voucher §6<list;add;remove>");
+                sender.sendMessage(" §7/voucher §8[alias: vouchers]");
+                sender.sendMessage(" §7/bar");
 
                 return true;
             }
             return false;
         }
         if (cmd.getName().equalsIgnoreCase("voucher")) {
-            if ((!(sender instanceof org.bukkit.entity.Player)) || (sender.hasPermission("tools.smsshop.voucher"))) {
+            if ((!(sender instanceof Player)) || (sender.hasPermission("tools.smsshop.voucher"))) {
                 if (args.length == 0) {
-                    sender.sendMessage("§cPoprawne uzycie: §7/" + label + " <list|info|add|remove|edit>");
+                    sender.sendMessage("§7/voucher §8[alias: vouchers]");
+                    sender.sendMessage(" §7/voucher §6list §7- lista voucherow");
+                    sender.sendMessage(" §7/voucher §6info §c<id> §7- informacje o danym voucherze");
+                    sender.sendMessage(" §7/voucher §6add §7- dodawanie voucherow");
+                    sender.sendMessage(" §7/voucher §6edit §c<id> §7- edycja voucherow");
+                    sender.sendMessage(" §7/voucher §6remove §c<id> §7- usuwanie voucherow");
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("list")) {
@@ -196,6 +205,41 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                 }
             } else {
                 sender.sendMessage("§cNie masz dostepu! :(");
+            }
+        } else if(cmd.getName().equalsIgnoreCase("bar")) {
+            if (sender.hasPermission("tools.smsshop.bar")) {
+                if (args.length == 1) {
+                    if (plugin.getServer().getPlayer(args[0]) != null) {
+                        if (sender instanceof Player) {
+                            ActionBar bar = new ActionBar();
+                            bar.setMessage(colorify(args[0]));
+                            bar.send(plugin.getServer().getPlayer(sender.getName()));
+                        } else {
+                            sender.sendMessage("§4Blad: §cmusisz byc graczem aby wykonac ta komende");
+                        }
+                    } else {
+                        sender.sendMessage("§cPoprawne uzycie: §7/" + label + " <gracz> <wiadomosc>");
+                    }
+                } else if (args.length == 2) {
+                    if(args[0].equalsIgnoreCase("all")) {
+                        ActionBar bar = new ActionBar();
+                        bar.setMessage(colorify(args[1]));
+                        for(Player p : plugin.getServer().getOnlinePlayers()) {
+                            bar.send(p);
+                        }
+                    } else if (plugin.getServer().getPlayer(args[0]) != null) {
+                        ActionBar bar = new ActionBar();
+                        bar.setMessage(colorify(args[1]));
+                        bar.send(plugin.getServer().getPlayer(args[0]));
+                    } else {
+                        sender.sendMessage("§4Blad: §cpodany gracz musi byc online");
+                    }
+                } else if (args.length == 0) {
+                    sender.sendMessage("§7/bar");
+                    sender.sendMessage(" §7/bar §c<wiadomosc> §7- pokaz wiadomosc sobie");
+                    sender.sendMessage(" §7/bar §c<gracz> <wiadomosc> §7- pokaz wiadomosc danemu graczowi");
+                    sender.sendMessage(" §7/bar all §c<wiadomosc> §7- pokaz wiadomosc danemu graczowi");
+                }
             }
         }
 

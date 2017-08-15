@@ -20,7 +20,7 @@ public class VoucherEditParser extends ChatInputStuff {
 
     public VoucherEditParser(ResultSet result, MCTrapsShop plugin) throws SQLException {
         int id = 0;
-        int uses = 0;
+        int uses = 1;
         int offer = 0;
         int timed = 0;
         String code = "";

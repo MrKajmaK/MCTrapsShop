@@ -3,6 +3,7 @@ version: 1.0.0
 author: KajmaczeK
 main: eu.mctraps.shop.MCTrapsShop
 website: https://mctraps.eu
+softdepends: [ActionBarAPI]
 commands:
   smsshop:
     description: "Główna komenda pluginu"
@@ -13,16 +14,24 @@ commands:
     aliases: [vouchers]
     usage: /<command> <list|info|add|remove|edit>
     permission: tools.smsshop.voucher
+  bar:
+    description: "Komenda do wysyłania wiadomości używając ActionBarAPI"
+    usage: /<command>
+    permission: tools.smsshop.bar
 permissions:
   tools.smsshop.*:
     description: "Wszystkie uprawnienia pluginu"
     default: op
     children:
-      - smsshop.admin
-      - smsshop.voucher
+      - tools.smsshop.admin
+      - tools.smsshop.voucher
+      - tools.smsshop.bar
   tools.smsshop.admin:
     description: "Pozwala na użycie głównej komendy"
     default: op
   tools.smsshop.voucher:
     description: "Pozwala na obsługę voucherów"
+    default: op
+  tools.smsshop.bar:
+    description: "Pozwala na wysyłanie wiadomości używając ActionBarAPI"
     default: op
