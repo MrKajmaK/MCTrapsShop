@@ -3,7 +3,7 @@ version: 1.0.0
 author: KajmaczeK
 main: eu.mctraps.shop.MCTrapsShop
 website: https://mctraps.eu
-harddepends: [ActionBarAPI]
+depend: [ActionBarAPI]
 commands:
   smsshop:
     description: "Główna komenda pluginu"

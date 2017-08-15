@@ -209,50 +209,39 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
         } else if(cmd.getName().equalsIgnoreCase("bar")) {
             if (sender.hasPermission("tools.smsshop.bar")) {
                 if (args.length == 1) {
-                    if (plugin.getServer().getPlayer(args[0]) != null) {
+                    if (plugin.getServer().getPlayer(args[0]) == null) {
                         if (sender instanceof Player) {
                             ActionBar bar = new ActionBar();
-                            bar.setMessage(colorify(args[0]));
+                            bar.setMessage(colorify(args[0]).replace('_', ' '));
                             bar.send(plugin.getServer().getPlayer(sender.getName()));
-
-                            return true;
+                            sender.sendMessage("§2Pomyslnie wyslano wiadomosc " + colorify(args[0]).replace('_', ' '));
                         } else {
                             sender.sendMessage("§4Blad: §cmusisz byc graczem aby wykonac ta komende");
-
-                            return true;
                         }
                     } else {
                         sender.sendMessage("§cPoprawne uzycie: §7/" + label + " <gracz> <wiadomosc>");
-
-                        return true;
                     }
                 } else if (args.length == 2) {
                     if(args[0].equalsIgnoreCase("all")) {
                         ActionBar bar = new ActionBar();
-                        bar.setMessage(colorify(args[1]));
+                        bar.setMessage(colorify(args[1]).replace('_', ' '));
                         for(Player p : plugin.getServer().getOnlinePlayers()) {
                             bar.send(p);
                         }
-
-                        return true;
+                        sender.sendMessage("§2Pomyslnie wyslano wiadomosc " + colorify(args[1]).replace('_', ' ') + "§2 do wszystkich graczy");
                     } else if (plugin.getServer().getPlayer(args[0]) != null) {
                         ActionBar bar = new ActionBar();
-                        bar.setMessage(colorify(args[1]));
+                        bar.setMessage(colorify(args[1]).replace('_', ' '));
                         bar.send(plugin.getServer().getPlayer(args[0]));
-
-                        return true;
+                        sender.sendMessage("§2Pomyslnie wyslano wiadomosc " + colorify(args[1]).replace('_', ' ') + "§2 do " + plugin.getServer().getPlayer(args[0]).getDisplayName());
                     } else {
                         sender.sendMessage("§4Blad: §cpodany gracz musi byc online");
-
-                        return true;
                     }
                 } else if (args.length == 0) {
                     sender.sendMessage("§7/bar");
                     sender.sendMessage(" §7/bar §c<wiadomosc> §7- pokaz wiadomosc sobie");
                     sender.sendMessage(" §7/bar §c<gracz> <wiadomosc> §7- pokaz wiadomosc danemu graczowi");
-                    sender.sendMessage(" §7/bar all §c<wiadomosc> §7- pokaz wiadomosc danemu graczowi");
-
-                    return true;
+                    sender.sendMessage(" §7/bar §6all §c<wiadomosc> §7- pokaz wiadomosc wszystkim graczom");
                 }
             }
 
