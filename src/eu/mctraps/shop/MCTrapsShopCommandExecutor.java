@@ -214,11 +214,17 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                             ActionBar bar = new ActionBar();
                             bar.setMessage(colorify(args[0]));
                             bar.send(plugin.getServer().getPlayer(sender.getName()));
+
+                            return true;
                         } else {
                             sender.sendMessage("§4Blad: §cmusisz byc graczem aby wykonac ta komende");
+
+                            return true;
                         }
                     } else {
                         sender.sendMessage("§cPoprawne uzycie: §7/" + label + " <gracz> <wiadomosc>");
+
+                        return true;
                     }
                 } else if (args.length == 2) {
                     if(args[0].equalsIgnoreCase("all")) {
@@ -227,20 +233,30 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
                         for(Player p : plugin.getServer().getOnlinePlayers()) {
                             bar.send(p);
                         }
+
+                        return true;
                     } else if (plugin.getServer().getPlayer(args[0]) != null) {
                         ActionBar bar = new ActionBar();
                         bar.setMessage(colorify(args[1]));
                         bar.send(plugin.getServer().getPlayer(args[0]));
+
+                        return true;
                     } else {
                         sender.sendMessage("§4Blad: §cpodany gracz musi byc online");
+
+                        return true;
                     }
                 } else if (args.length == 0) {
                     sender.sendMessage("§7/bar");
                     sender.sendMessage(" §7/bar §c<wiadomosc> §7- pokaz wiadomosc sobie");
                     sender.sendMessage(" §7/bar §c<gracz> <wiadomosc> §7- pokaz wiadomosc danemu graczowi");
                     sender.sendMessage(" §7/bar all §c<wiadomosc> §7- pokaz wiadomosc danemu graczowi");
+
+                    return true;
                 }
             }
+
+            return true;
         }
 
         return false;

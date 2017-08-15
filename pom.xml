@@ -28,7 +28,6 @@
     <build>
         <finalName>MCTrapsShop</finalName>
         <sourceDirectory>src/eu/mctraps/shop</sourceDirectory>
-        <outputDirectory>mavenOutput</outputDirectory>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
