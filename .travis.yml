@@ -12,7 +12,7 @@ after_success:
 - chmod 770 .travis/deploy.exp
 - chmod 770 .travis/notification.sh
 - ".travis/deploy.exp"
-- '.travis/notification.sh "Travis build ended"'
+- '.travis/notification.sh "MCTrapsShop build ended"'
 branchers:
   only:
   - master
