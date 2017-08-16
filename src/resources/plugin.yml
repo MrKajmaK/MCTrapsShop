@@ -1,5 +1,5 @@
 name: MCTrapsShop
-version: 1.0.0
+version: ${project.version}
 author: KajmaczeK
 main: eu.mctraps.shop.MCTrapsShop
 website: https://mctraps.eu

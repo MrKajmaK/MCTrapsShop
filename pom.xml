@@ -22,7 +22,6 @@
 
     <build>
         <finalName>MCTrapsShop</finalName>
-        <sourceDirectory>src/eu/mctraps/shop</sourceDirectory>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
