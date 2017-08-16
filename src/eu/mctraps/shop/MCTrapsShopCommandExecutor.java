@@ -2,6 +2,7 @@ package eu.mctraps.shop;
 
 import eu.mctraps.shop.ChatInput.VoucherAddParser;
 import eu.mctraps.shop.ChatInput.VoucherEditParser;
+import eu.mctraps.shop.Vouchers.Voucher;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -182,13 +183,24 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
 
                                 if(count == 1) {
                                     ResultSet result = plugin.statement.executeQuery("SELECT * FROM " + plugin.vTable + " WHERE id='" + args[1] + "'");
+                                    int id = 0;
+                                    int uses = 0;
+                                    int offer = 0;
+                                    int timed = 0;
                                     String code = "";
+                                    Date endtime = new Date();
                                     while(result.next()) {
+                                        id = result.getInt("id");
                                         code = result.getString("code");
+                                        uses = result.getInt("uses");
+                                        offer = result.getInt("offer");
+                                        timed = result.getInt("timed");
+                                        endtime = result.getTimestamp("endtime");
                                     }
+                                    Voucher v = new Voucher(plugin, id, code, uses, offer, timed, endtime);
                                     sender.sendMessage("§7Uruchomiono edytor voucherow. W kazdej chwili mozesz wpisac §6\"cancel\" §7aby wyjsc.");
                                     sender.sendMessage("§9Podaj kod (voucher) lub L aby zostawic aktualny §6(10 znakow A-Za-z0-9) §b[" + code + "]");
-                                    plugin.ci.addToMap((Player) sender, new VoucherEditParser(result, plugin));
+                                    plugin.ci.addToMap((Player) sender, new VoucherEditParser(v, plugin));
                                 }
                             } catch (SQLException e) {
                                 e.printStackTrace();

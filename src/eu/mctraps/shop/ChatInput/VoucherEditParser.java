@@ -18,22 +18,11 @@ public class VoucherEditParser extends ChatInputStuff {
     private int stage = 0;
     private Voucher v;
 
-    public VoucherEditParser(ResultSet result, MCTrapsShop plugin) throws SQLException {
-        int id = 0;
-        int uses = 1;
-        int offer = 0;
-        int timed = 0;
-        String code = "";
-        Date endtime = new Date();
-        while(result.next()) {
-            id = result.getInt("id");
-            code = result.getString("code");
-            uses = result.getInt("uses");
-            offer = result.getInt("offer");
-            timed = result.getInt("timed");
-            endtime = result.getTimestamp("endtime");
+    public VoucherEditParser(Voucher v, MCTrapsShop plugin) {
+        this.v = v;
+        for(Player p : plugin.getServer().getOnlinePlayers()) {
+            p.sendMessage(": " + Integer.toString(v.getOffer()));
         }
-        v = new Voucher(plugin, id, code, uses, offer, timed, endtime);
     }
 
     @Override
@@ -52,7 +41,6 @@ public class VoucherEditParser extends ChatInputStuff {
 
         if(!(message.toLowerCase().contains("cancel"))) {
             if (stage == 0) {
-                v = new Voucher(plugin);
                 if (!(message.toLowerCase().equalsIgnoreCase("L"))) {
                     if (message.matches("[A-Za-z0-9]{10}")) {
                         v.setCode(message);
@@ -172,18 +160,20 @@ public class VoucherEditParser extends ChatInputStuff {
                         Bukkit.getPlayer(username).sendMessage("§9Pomyslnie stworzono voucher. Wysylanie do bazy danych...");
                         boolean sent = v.push();
                         if (sent) {
-                            Bukkit.getPlayer(username).sendMessage("§9Pomyslnie wyslano voucher do bazy danych :)");
+                            Bukkit.getPlayer(username).sendMessage("§2Pomyslnie wyslano voucher do bazy danych :)");
                         } else {
                             Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas wysylania vouchera do bazy danych :(");
                         }
                         stage = 9000;
                         map.removePlayer(username);
+                    } else {
+                        Bukkit.getPlayer(username).sendMessage("§4Blad: §czly format daty");
                     }
                 } else {
                     Bukkit.getPlayer(username).sendMessage("§9Pomyslnie zedytowano voucher. Wysylanie do bazy danych...");
                     boolean sent = v.push();
                     if (sent) {
-                        Bukkit.getPlayer(username).sendMessage("§9Pomyslnie wyslano voucher do bazy danych :)");
+                        Bukkit.getPlayer(username).sendMessage("§2Pomyslnie wyslano voucher do bazy danych :)");
                     } else {
                         Bukkit.getPlayer(username).sendMessage("§cWystapil blad podczas wysylania vouchera do bazy danych :(");
                     }

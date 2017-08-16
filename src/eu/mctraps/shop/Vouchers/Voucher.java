@@ -108,7 +108,7 @@ public class Voucher {
         if ("x" + code + uses + offer + timed + endtime != "x") {
             if(timed == 1) {
                 try {
-                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "', endtime='" + endtime + "')");
+                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "', endtime='" + endtime + "' WHERE id='" + id + "'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;
@@ -116,7 +116,7 @@ public class Voucher {
                 return true;
             } else {
                 try {
-                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "')");
+                    plugin.statement.executeUpdate("UPDATE " + plugin.vTable + " SET code='" + code + "', uses='" + uses + "', offer='" + offer + "', timed='" + timed + "' WHERE id='" + id + "'");
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return false;
