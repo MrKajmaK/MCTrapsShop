@@ -30,7 +30,6 @@ public class MCTrapsShopCommandExecutor implements CommandExecutor {
             if (args.length == 0) {
                 sender.sendMessage("§7Glowne komendy pluginu:");
                 sender.sendMessage(" §7/voucher §8[alias: vouchers]");
-                sender.sendMessage(" §7/bar");
 
                 return true;
             }

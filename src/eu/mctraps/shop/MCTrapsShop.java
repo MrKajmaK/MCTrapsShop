@@ -61,7 +61,6 @@ public class MCTrapsShop extends JavaPlugin {
 
         getCommand("smsshop").setExecutor(new MCTrapsShopCommandExecutor(this));
         getCommand("voucher").setExecutor(new MCTrapsShopCommandExecutor(this));
-        getCommand("bar").setExecutor(new MCTrapsShopCommandExecutor(this));
     }
 
     @Override
